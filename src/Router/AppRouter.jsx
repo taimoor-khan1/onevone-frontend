@@ -7,7 +7,7 @@ import PreviousMatch from '../screens/PreviousMatch';
 
 function AppRouter() {
   return (
-    <Router basename='/'>
+    <Router>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/context-entry' element={<ContextEntry />} />
