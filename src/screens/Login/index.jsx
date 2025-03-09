@@ -21,13 +21,13 @@ const Login = () => {
           <GlassBox>
             <h2 className='login-title'>Login</h2>
             <form>
-              <InputGroup className='mb-5'>
+              <InputGroup className='mb-md-5 mb-4'>
                 <InputGroup.Text>
                   <img src={userIcon} alt='Icon' />
                 </InputGroup.Text>
                 <Form.Control placeholder='User Name' />
               </InputGroup>
-              <InputGroup className='mb-5'>
+              <InputGroup className='mb-md-5 mb-4'>
                 <InputGroup.Text>
                   <img src={emailIcon} alt='Icon' />
                 </InputGroup.Text>
