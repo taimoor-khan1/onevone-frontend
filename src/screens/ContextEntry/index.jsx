@@ -11,6 +11,7 @@ import GlassBox from '../../components/GlassBox';
 import ChallengeBox from '../../components/ChallengeBox';
 import FullScreenBG from '../../components/FullScreenBG';
 import { Link } from 'react-router-dom';
+import Challenge from '../../components/Challenge/Challenge';
 
 const contextEntryData = [
   {
@@ -78,6 +79,7 @@ const contextEntryData = [
 const ContextEntry = () => {
   return (
     <DefaultLayout>
+      <Challenge/>
       <FullScreenBG backgroundImage={contextscreenbg}>
         <div className='col-md-12'>
           <GlassBox>
