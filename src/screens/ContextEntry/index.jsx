@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DefaultLayout from "../../components/DefaultLayout";
 
 import contextscreenbg from "../../assets/images/context-screen-bg.png";
@@ -12,6 +12,8 @@ import ChallengeBox from "../../components/ChallengeBox";
 import FullScreenBG from "../../components/FullScreenBG";
 import { Link } from "react-router-dom";
 import Challenge from "../../components/Challenge/Challenge";
+import { GetUserService } from "../../api/services/User";
+import loginScreenBg from "../../assets/images/login-screen-bg.png";
 
 const contextEntryData = [
   {
@@ -77,7 +79,37 @@ const contextEntryData = [
 ];
 
 const ContextEntry = () => {
-  return (
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchUser = async () => {
+    try {
+      setLoading(true)
+      const token = localStorage.getItem("token");
+      const response = await GetUserService(token);
+      setData(response?.data||[])
+      setLoading(false)
+
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  return loading ? (
+    <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
+      <FullScreenBG backgroundImage={loginScreenBg}>
+        <h1 className="login-title">Loading.....</h1>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </FullScreenBG>
+    </div>
+  ) : (
     <DefaultLayout>
       <FullScreenBG backgroundImage={contextscreenbg}>
         <div className="col-md-12">
@@ -91,17 +123,17 @@ const ContextEntry = () => {
             </div>
             <div className="total-competitors-div">
               <p>
-                <span className="whiteColor-80">Total Competitors</span>: 20
+                <span className="whiteColor-80">Total Competitors</span>: {data?.length||0}
               </p>
               <Link to={"/previous-match"} className="whiteColor-80">
                 Previous Match
               </Link>
             </div>
             <div className="challenge-boxes glass-bg custon-scroll">
-              {contextEntryData.map((item, index) => (
+              {data.map((item, index) => (
                 <ChallengeBox
-                  image={item.image}
-                  name={item.name}
+                  image={item?.profilePicture}
+                  name={item?.username}
                   email={item.email}
                   key={index}
                 />

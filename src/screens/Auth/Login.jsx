@@ -10,7 +10,7 @@ import passwordIcon from "../../assets/images/password-icon.png";
 
 import DefaultLayout from "../../components/DefaultLayout";
 import GlassBox from "../../components/GlassBox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FullScreenBG from "../../components/FullScreenBG";
 import { LoginService } from "../../api/services/Auth";
 import { toast } from "react-toastify";
@@ -19,7 +19,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const submitLogin = async () => {
     try {
       setLoading(true);
@@ -31,7 +31,8 @@ const Login = () => {
         };
         const response = await LoginService(data);
         localStorage.setItem("token", response?.token);
-        localStorage.setItem("user", response?.data);
+        localStorage.setItem("user",JSON.stringify( response?.data));
+        navigate("/context-entry");
         setLoading(false);
       } else {
         toast.error("User name and password both required");
