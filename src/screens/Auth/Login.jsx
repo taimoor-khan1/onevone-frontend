@@ -34,16 +34,10 @@ const Login = () => {
           password,
         };
         const response = await LoginService(data);
-<<<<<<< HEAD
         localStorage.setItem("token", response?.token);
         localStorage.setItem("user",JSON.stringify( response?.data));
         socket.emit("storeSocketId",  username);
         navigate("/context-entry");
-=======
-        localStorage.setItem('token', response?.token);
-        localStorage.setItem('user', JSON.stringify(response?.data));
-        navigate('/context-entry');
->>>>>>> 4e72458d9d3fbfbb5befe3562195917dbada8e05
         setLoading(false);
       } else {
         toast.error('User name and password both required');
