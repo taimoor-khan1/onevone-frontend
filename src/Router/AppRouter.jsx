@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,6 +12,9 @@ import PreviousMatch from "../screens/PreviousMatch";
 import Register from "../screens/Auth/Register";
 import Verification from "../screens/Auth/Verification";
 import ResetPassword from "../screens/Auth/Verification copy";
+import socket from "../utils/socket"; // Import Socket.IO
+import { useEffect } from "react";
+import ConnectionStatus from "../components/ConnectionStatus.";
 
 // Protected Route Component
 const ProtectedRoute = ({ element }) => {
@@ -27,8 +29,28 @@ const PublicRoute = ({ element }) => {
 };
 
 function AppRouter() {
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      socket.connect();
+      const user = localStorage.getItem("user");
+      const userDetail = user ? JSON.parse(user) : null;
+   
+      if (userDetail?.id) {
+        socket.emit("storeSocketId", userDetail?.id);
+      }
+
+      // Handle disconnect
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [token]);
+
   return (
     <Router>
+      <ConnectionStatus />
       <Routes>
         {/* Public Routes (Redirect if token exists) */}
         <Route path="/" element={<PublicRoute element={<Login />} />} />

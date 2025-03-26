@@ -32,6 +32,7 @@ const Login = () => {
         const response = await LoginService(data);
         localStorage.setItem("token", response?.token);
         localStorage.setItem("user",JSON.stringify( response?.data));
+        socket.emit("storeSocketId",  username);
         navigate("/context-entry");
         setLoading(false);
       } else {

@@ -12,7 +12,7 @@ const ChallengeBox = (props) => {
           <a href='javascript:;'>{props.email}</a>
         </div>
       </div>
-      <button type='button' className='challenge-box-btn'>
+      <button type='button' onClick={props?.onChallenge}  className='challenge-box-btn'>
         Challenge
       </button>
     </div>
