@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
@@ -15,28 +15,28 @@ import FullScreenBG from '../../components/FullScreenBG';
 import { LoginService } from '../../api/services/Auth';
 import { toast } from 'react-toastify';
 import CustomModal from '../../components/CustomModal';
+import socket from '../../utils/socket';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [showModal, setShowModal] = useState(true);
-  // const challengerName = 'John Doe';
-
+  
   const navigate = useNavigate();
+ 
   const submitLogin = async () => {
     try {
       setLoading(true);
 
-      if (username !== '' && password !== '') {
+      if (email !== '' && password !== '') {
         const data = {
-          username,
+          email,
           password,
         };
         const response = await LoginService(data);
         localStorage.setItem("token", response?.token);
         localStorage.setItem("user",JSON.stringify( response?.data));
-        socket.emit("storeSocketId",  username);
+        socket.emit("storeSocketId",  response?.data?.username);
         navigate("/context-entry");
         setLoading(false);
       } else {
@@ -44,10 +44,15 @@ const Login = () => {
         setLoading(false);
       }
     } catch (error) {
+      if(error?.response?.data?.error==="Email not verified")
+      {
+        navigate("/verifyEmail", { state: { email } });
+      }
       toast.error(error?.response?.data?.error);
       setLoading(false);
     }
   };
+
 
   return loading ? (
     <div className='d-flex flex-column' style={{ minHeight: '100vh' }}>
@@ -70,10 +75,10 @@ const Login = () => {
                   <img src={userIcon} alt='Icon' />
                 </InputGroup.Text>
                 <Form.Control
-                  placeholder='Username'
-                  value={username}
+                  placeholder='Email'
+                  value={email}
                   onChange={(e) => {
-                    setUsername(e.target.value);
+                    setEmail(e.target.value);
                   }}
                 />
               </InputGroup>
@@ -100,7 +105,7 @@ const Login = () => {
                 </div>
 
                 {/* Forget Password Link */}
-                <Link to='javascript:;' className='forget-password-btn'>
+                <Link to='/verification' className='forget-password-btn'>
                   Forget Password?
                 </Link>
               </div>
@@ -119,6 +124,16 @@ const Login = () => {
                 >
                   Login
                 </button>
+              </div>
+              <div className='d-flex justify-content-center mt-2 '>
+
+              <span className=' fw-bold text-white login-price'>OR</span>
+              </div>
+              <div className='forget-pass-div d-flex justify-content-center mt-2 align-items-center mb-4'>
+              
+                <Link to='/register' className='forget-password-btn'>
+                 Register
+                </Link>
               </div>
             </form>
           </GlassBox>

@@ -11,10 +11,11 @@ import Winner from "../screens/Winner";
 import PreviousMatch from "../screens/PreviousMatch";
 import Register from "../screens/Auth/Register";
 import Verification from "../screens/Auth/Verification";
-import ResetPassword from "../screens/Auth/Verification copy";
+import ResetPassword from "../screens/Auth/ResetPassword";
 import socket from "../utils/socket"; // Import Socket.IO
 import { useEffect } from "react";
 import ConnectionStatus from "../components/ConnectionStatus.";
+import VerificationEmail from "../screens/Auth/VerificationEmail";
 
 // Protected Route Component
 const ProtectedRoute = ({ element }) => {
@@ -65,6 +66,10 @@ function AppRouter() {
         <Route
           path="/resetpassword"
           element={<PublicRoute element={<ResetPassword />} />}
+        />
+        <Route
+          path="/verifyEmail"
+          element={<PublicRoute element={<VerificationEmail />} />}
         />
 
         {/* Protected Routes (Accessible only if token exists) */}

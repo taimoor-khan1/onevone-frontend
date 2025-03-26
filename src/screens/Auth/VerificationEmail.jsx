@@ -10,33 +10,23 @@ import passwordIcon from "../../assets/images/password-icon.png";
 
 import DefaultLayout from "../../components/DefaultLayout";
 import GlassBox from "../../components/GlassBox";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FullScreenBG from "../../components/FullScreenBG";
 import { toast } from "react-toastify";
 import { ResetPasswordService, VerifyEmailService } from "../../api/services/Auth";
 
-const Verification = () => {
+const VerificationEmail = (props) => {
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-    const [code, setCode] = useState("");
-  
+  const [code, setCode] = useState("");
+  const { email } = location.state || {}; // Email passed via state
   const navigate = useNavigate();
-
-  const isValidEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  const SendVerificationEmail = async () => {
+const SendVerificationEmail = async () => {
     try {
       setLoading(true);
 
       if (email !== "") {
-        if (!isValidEmail(email)) {
-          toast.error("Please enter a valid email address.");
-          setLoading(false);
-          return;
-        }
+     
         const data = {
           email,
         };
@@ -49,41 +39,34 @@ const Verification = () => {
         setLoading(false);
       }
     } catch (error) {
+      console.log(error)
       toast.error(error?.response?.data?.error);
       setLoading(false);
     }
   };
-    const submitVerify = async () => {
-      try {
-        setLoading(true);
-  
-        if (code !== "" & email !=="") {
-          if (!isValidEmail(email)) {
-            toast.error("Please enter a valid email address.");
-            setLoading(false);
-            return;
-          }
-          const data = {
-            code,
-            email,
-          };
-          const response = await VerifyEmailService(data);
-          navigate("/resetpassword", { state: { email } });
-          toast.success(response?.message);
-          setLoading(false);
-        } else {
-          toast.error("Code and Email are required");
-          setLoading(false);
-        }
-      } catch (error) {
-        console.log(error)
-        toast.error(error?.response?.data?.error);
+  const submitVerify = async () => {
+    try {
+      setLoading(true);
+
+      if (code !== "") {
+        const data = {
+          code,
+          email,
+        };
+        const response = await VerifyEmailService(data);
+        navigate("/",);
+        toast.success(response?.message);
+        setLoading(false);
+      } else {
+        toast.error("Code is required");
         setLoading(false);
       }
-    };
-
-
-
+    } catch (error) {
+      console.log(error)
+      toast.error(error?.response?.data?.error);
+      setLoading(false);
+    }
+  };
   return loading ? (
     <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
       <FullScreenBG backgroundImage={loginScreenBg}>
@@ -100,29 +83,18 @@ const Verification = () => {
           <GlassBox>
             <h2 className="login-title">Verification</h2>
             <form>
-              <InputGroup className="mb-md-5 mb-4">
-                <InputGroup.Text>
-                  <img src={emailIcon} alt="Icon" />
-                </InputGroup.Text>
-                <Form.Control 
-                 value={email}
-                 onChange={(e) => {
-                   setEmail(e.target.value);
-                 }}
-                placeholder="Email Address" />
-              </InputGroup>
               <InputGroup className="mb-2">
                 <InputGroup.Text>
                   <img src={passwordIcon} alt="Icon" />
                 </InputGroup.Text>
                 <Form.Control
-                  maxLength={6}
-                  type="password"
-                  placeholder="Code"
                   value={code}
                   onChange={(e) => {
                     setCode(e.target.value);
                   }}
+                  maxLength={6}
+                  type="password"
+                  placeholder="Code"
                 />
               </InputGroup>
               <div
@@ -133,7 +105,9 @@ const Verification = () => {
                 Send Code
               </div>
               <div className="col-md-12">
-                <button onClick={submitVerify} type="button" className="login-btn">
+                <button type="button" 
+                onClick={submitVerify}
+                className="login-btn">
                   Verification
                 </button>
               </div>
@@ -145,4 +119,4 @@ const Verification = () => {
   );
 };
 
-export default Verification;
+export default VerificationEmail;
