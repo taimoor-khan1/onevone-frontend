@@ -35,13 +35,13 @@ const CustomModal = (props) => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <Modal.Body className={props.children ? '' : 'text-center'}>
-          {props?.children ? (
+          {/* {props?.children ? (
             ''
           ) : props?.success ? (
             <FontAwesomeIcon icon={faCheckCircle} className='checkMark' />
           ) : (
             <FontAwesomeIcon icon={faExclamation} className='questionMark' />
-          )}
+          )} */}
 
           <div className='modalContent'>
             <h2 className='modalHeading text-center text-capitalize'>
