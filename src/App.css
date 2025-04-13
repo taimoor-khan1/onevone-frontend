@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Orbitron:wght@400..900&family=Poetsen+One&family=Roboto:wght@600&family=Special+Gothic&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Poetsen+One&family=Roboto:wght@600&family=Special+Gothic&display=swap');
+
 .login-screen-page {
   display: flex;
   justify-content: center;
@@ -106,8 +109,16 @@ body {
   text-align: center;
   color: #fff;
   margin: 30px 0 30px;
-  font-family: 'Rammetto One', sans-serif;
+  /* font-family: 'Rammetto One', sans-serif; */
   font-size: 30px;
+  font-weight: 500;
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-style: italic;
+  /* font-weight: 400;
+  font-style: normal; */
+  
+
 }
 
 .login-btn {
@@ -115,7 +126,11 @@ body {
   background: #fff;
   display: block;
   width: 100%;
-  font-family: 'Rammetto One', sans-serif;
+  /* font-family: 'Rammetto One', sans-serif; */
+  font-weight: 500;
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-style: italic;
   font-size: 23px;
   padding: 10px 16px;
   border-radius: 10px;
@@ -201,7 +216,11 @@ body {
 }
 
 .context-fee-box h3 {
-  font-family: 'Rammetto One', sans-serif;
+  /* font-family: 'Rammetto One', sans-serif; */
+  font-weight: 500;
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-style: italic;
   color: #ffffff;
   font-size: 24px;
 }
@@ -326,7 +345,11 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   opacity: 1;
-  font-family: 'Rammetto One', sans-serif;
+  /* font-family: 'Rammetto One', sans-serif; */
+  font-weight: 500;
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-style: italic;
   font-size: 33px !important;
 }
 
